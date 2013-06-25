@@ -1,0 +1,24 @@
+/**
+* Automatic Web Testing Utility
+* @ver 0.1
+* @license BSD License - www.opensource.org/licenses/bsd-license.php
+*
+* Copyright (c) 2013 Sayak Banerjee <mail@sayakbanerjee.com>
+* All rights reserved. Do not remove this copyright notice.
+*/
+
+body {
+  position: relative;
+  padding-top: 60px;
+}
+.align-center {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+.align-left {
+  text-align: left;
+}
+.align-right {
+  text-align: right;
+}

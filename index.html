@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html>
+<!--
+- Automatic Web Testing Utility
+- @ver 0.1
+- @license BSD License - www.opensource.org/licenses/bsd-license.php
+-
+- Copyright (c) 2013 Sayak Banerjee <mail@sayakbanerjee.com>
+- All rights reserved. Do not remove this copyright notice.
+-->
+
+<head>
+	<title>AWT Utility</title>
+
+	<link href="site/css/bootstrap.min.css" rel="stylesheet" type="text/css" media="screen, projection" />
+	<link href="site/css/awt.css" rel="stylesheet" type="text/css" media="screen, projection" />
+	<script src="site/js/jquery.min.js" type="text/javascript"></script>
+	<script src="site/js/jquery.cookie.js" type="text/javascript"></script>
+	<script src="site/js/jquery.form.js" type="text/javascript"></script>
+	<script src="site/js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="lib/js/constants.js" type="text/javascript"></script>
+	<script src="lib/js/popups.js" type="text/javascript"></script>
+	<script src="lib/js/profiles.js" type="text/javascript"></script>
+	<script src="lib/js/system.js" type="text/javascript"></script>
+</head>
+
+<body>
+	<div class="navbar navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container">
+				<a class="brand" href="./">Automatic Web Testing Utility</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="hero-unit">
+			<h1>Welcome to AWT Utility</h1>
+			<hr />
+			<p>Select one of the following three options:</p>
+			<br />
+			<form id="profile-form" action="lib/php/io.php" method="post" class="form-horizontal" enctype="multipart/formdata">
+				<div class="control-group">
+					<label class="control-label" for="profile-list">Select an existing profile</label>
+					<div class="controls">
+						<select id="profile-list" class="span3"></select>
+						<button id="profile-list-btn" class="btn">Select</button>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="profile-new">Create a new profile</label>
+					<div class="controls">
+						<input id="profile-new" type="text" class="span3" value="" placeholder="Profile name" />
+						<button id="profile-new-btn" class="btn">Create</button>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="profile-list">Import profile template</label>
+					<div class="controls">
+						<input id="profile-import" type="text" class="span3" value="" readonly="readonly" placeholder="Click to browse..." />
+						<input id="profile-import-file" name="file" type="file" class="hide" />
+						<button id="profile-import-btn" type="submit" class="btn">Import</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<div id="popup-message" class="modal hide fade" data-backdrop="true" data-keyboard="true">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			<h3 id="popup-message-title"></h3>
+		</div>
+		<div class="modal-body">
+			<p id="popup-message-body"></p>
+		</div>
+		<div class="modal-footer">
+			<button id="popup-message-ok" class="btn btn-primary" onclick="popups.messageButton(constants.popups.ok)">OK</button>
+			<button id="popup-message-yes" class="btn btn-primary" onclick="popups.messageButton(constants.popups.yes)">Yes</button>
+			<button id="popup-message-no" class="btn" onclick="popups.messageButton(constants.popups.no)">No</button>
+		</div>
+	</div>
+</body>
+
+</html>

@@ -9,9 +9,9 @@
 */
 
 // Hierarcy check
-if (!defined('IN_IO'))
+if (!defined('IN_SCRIPT'))
 {
-    exit('Script access not allowed');
+	exit('Script access not allowed');
 }
 
 // Response status codes
