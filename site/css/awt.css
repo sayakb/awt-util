@@ -11,6 +11,28 @@ body {
   position: relative;
   padding-top: 60px;
 }
+h1 img {
+  margin-top: -7px;
+}
+th.column-id,
+th.column-run {
+  width: 15%;
+}
+.container {
+  min-width: 940px;
+}
+.form-profile .control-group {
+  margin-bottom: 0;
+}
+.form-profile .control-label {
+  width: auto;
+}
+.form-profile .controls {
+  margin-left: 100px;
+}
+.alert-profile {
+  margin-top: -20px;
+}
 .align-center {
   text-align: center;
   margin-left: auto;
@@ -21,4 +43,10 @@ body {
 }
 .align-right {
   text-align: right;
+}
+.pull-left {
+  float: left;
+}
+.pull-right {
+  float: right;
 }

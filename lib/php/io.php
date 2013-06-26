@@ -17,12 +17,14 @@ require('helpers.php');
 // Get POSTed data
 $action = http_var('action', '');
 $profile = http_var('profile', '');
+$rename = http_var('rename', '');
 $data = http_var('data', '');
 $file = http_file('file');
 
 // Get the profile path
 $profile_dir = realpath('../../profiles/');
 $profile_src = "{$profile_dir}/{$profile}.awt";
+$profile_new = "{$profile_dir}/{$rename}.awt";
 
 // Was a file POSTed? If so, we simply output its contents
 if ($file !== false)
@@ -44,7 +46,13 @@ switch($action)
 		validate_session(empty($profile_data), STATUS_IO_ERROR);
 
 		// Output the file contents
-		create_response($profile_data);
+		$profile_ary = json_decode($profile_data);
+		$response = array(
+			'statusCode'	=> STATUS_SUCCESS,
+			'profile'		=> $profile_ary
+		);
+
+		create_response($response);
 		break;
 
 	case 'save':
@@ -61,8 +69,22 @@ switch($action)
 		create_response($response);
 		break;
 
-	case 'delete':
-		// Kill the session if file was specified or not found
+	case 'rename':
+		// Kill the session if new name or file was skipped or file not found
+		validate_session(empty($profile) || empty($rename), STATUS_NO_DATA);
+		validate_session(!file_exists($profile_src), STATUS_IO_ERROR);
+
+		// Delete the file
+		$status = rename($profile_src, $profile_new);
+		validate_session($status === false, STATUS_IO_ERROR);
+
+		// Output success message
+		$response = array('statusCode' => STATUS_SUCCESS);
+		create_response($response);
+		break;
+
+	case 'remove':
+		// Kill the session if file was not specified or not found
 		validate_session(empty($profile), STATUS_NO_DATA);
 		validate_session(!file_exists($profile_src), STATUS_IO_ERROR);
 
