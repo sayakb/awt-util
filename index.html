@@ -12,8 +12,11 @@
 <head>
 	<title>AWT Utility</title>
 
+	<!-- Stylesheets -->
 	<link href="site/css/bootstrap.min.css" rel="stylesheet" type="text/css" media="screen, projection" />
 	<link href="site/css/awt.css" rel="stylesheet" type="text/css" media="screen, projection" />
+
+	<!-- Scripts -->
 	<script src="site/js/jquery.min.js" type="text/javascript"></script>
 	<script src="site/js/jquery.cookie.js" type="text/javascript"></script>
 	<script src="site/js/jquery.form.js" type="text/javascript"></script>
@@ -31,11 +34,12 @@
 	<div class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container">
-				<a class="brand" href="./">Automatic Web Testing Utility</a>
+				<a id="brand" class="brand" href="./">Automatic Web Testing Utility</a>
 			</div>
 		</div>
 	</div>
 
+	<!-- Homepage container -->
 	<div id="wrapper-home" class="awt-wrapper container">
 		<div class="hero-unit">
 			<h1>
@@ -43,54 +47,67 @@
 				Welcome to the AWT Utility
 			</h1>
 			<hr />
+
 			<p>Select one of the following three options:</p>
 			<br />
+
 			<form id="profile-form" action="lib/php/io.php" method="post" class="form-horizontal" enctype="multipart/formdata">
 				<div class="control-group">
 					<label class="control-label" for="profile-list">Select an existing profile</label>
 					<div class="controls">
 						<select id="profile-list" class="span3"></select>
+
 						<button id="profile-list-btn" class="btn" disabled="disabled">
 							<i class="icon-ok"></i> Select
 						</button>
 					</div>
 				</div>
+
 				<div class="control-group">
 					<label class="control-label" for="profile-new">Create a new profile</label>
 					<div class="controls">
 						<input id="profile-new" type="text" class="span3" value="" placeholder="Profile name" />
+
 						<button id="profile-new-btn" class="btn" disabled="disabled">
 							<i class="icon-pencil"></i> Create
 						</button>
 					</div>
 				</div>
+
 				<div class="control-group">
 					<label class="control-label" for="profile-list">Import profile template</label>
 					<div class="controls">
 						<input id="profile-import" type="text" class="span3" value="" readonly="readonly" placeholder="Click to browse..." />
 						<input id="profile-import-file" name="file" type="file" class="hide" />
+
 						<button id="profile-import-btn" type="submit" class="btn" disabled="disabled">
-							<i class="icon-download-alt"></i> Import</button>
+							<i class="icon-download-alt"></i> Import
+						</button>
 					</div>
 				</div>
 			</form>
 		</div>
 	</div>
 
+	<!-- Profile view container -->
 	<div id="wrapper-profile" class="awt-wrapper container hide">
 		<div class="row">
 			<div class="span12">
 				<form class="well form-horizontal form-profile">
 					<div class="control-group">
 						<label class="control-label" for="profile-current">Current profile</label>
+
 						<div class="controls">
 							<input id="profile-current" type="text" value="" />
+
 							<button id="profile-rename" class="btn" disabled="disabled">
 								<i class="icon-font"></i> Rename profile
 							</button>
+
 							<button id="profile-delete" class="btn btn-danger">
 								<i class="icon-trash icon-white"></i> Delete profile
 							</button>
+
 							<button id="profile-change" class="btn pull-right">
 								<i class="icon-refresh"></i> Change profile
 							</button>
@@ -118,8 +135,7 @@
 						</tr>
 					</thead>
 
-					<tbody>
-					</tbody>
+					<tbody></tbody>
 				</table>
 
 				<div id="test-no-cases" class="alert alert-info alert-profile">
@@ -129,18 +145,130 @@
 		</div>
 	</div>
 
+	<!-- General message box -->
 	<div id="popup-message" class="modal hide fade" data-backdrop="true" data-keyboard="true">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 			<h3 id="popup-message-title"></h3>
 		</div>
+
 		<div class="modal-body">
 			<p id="popup-message-body"></p>
 		</div>
+
 		<div class="modal-footer">
-			<button id="popup-message-ok" class="btn btn-primary" onclick="popups.messageButton(constants.popups.ok)">OK</button>
-			<button id="popup-message-yes" class="btn btn-primary" onclick="popups.messageButton(constants.popups.yes)">Yes</button>
-			<button id="popup-message-no" class="btn" onclick="popups.messageButton(constants.popups.no)">No</button>
+			<button id="popup-message-ok" class="btn btn-primary" onclick="popups.messageButton(constants.popups.ok)">
+				<i class="icon-ok icon-white"></i> OK
+			</button>
+
+			<button id="popup-message-yes" class="btn btn-primary" onclick="popups.messageButton(constants.popups.yes)">
+				<i class="icon-ok icon-white"></i> Yes
+			</button>
+
+			<button id="popup-message-no" class="btn" onclick="popups.messageButton(constants.popups.no)">
+				<i class="icon-remove"></i> No
+			</button>
+		</div>
+	</div>
+
+	<!-- Test case modal -->
+	<div id="popup-test" class="modal modal-big hide fade" data-backdrop="true" data-keyboard="true">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			<h3>Test case</h3>
+		</div>
+
+		<div class="modal-body">
+			<form class="form-horizontal">
+				<div class="control-group">
+					<label class="control-label" for="test-name">Name</label>
+
+					<div class="controls">
+						<input id="test-name" type="text" />
+					</div>
+				</div>
+
+				<div class="control-group">
+					<label class="control-label" for="test-url">URL</label>
+
+					<div class="controls">
+						<input id="test-url" type="text" />
+						<div class="help-block">You must use the same hostname as the tool</div>
+					</div>
+				</div>
+
+				<div class="control-group">
+					<label class="control-label" for="test-method">Request type</label>
+
+					<div class="controls">
+						<div class="btn-group" data-toggle="buttons-radio">
+							<button type="button" id="test-method-get" class="btn active">GET</button>
+							<button type="button" id="test-method-post" class="btn">POST</button>
+						</div>
+					</div>
+				</div>
+			</form>
+
+			<hr />
+			<h4>Request parameters</h4>
+
+			<table id="test-requests" class="table">
+				<thead>
+					<tr>
+						<th class="column-req-param">Param</th>
+						<th class="column-req-val">Value</th>
+						<th class="column-req-actions"></th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr>
+						<td><input id="test-req-param" type="text" class="stretch" /></td>
+						<td><input id="test-req-val" type="text" class="stretch" /></td>
+						<td><a href="#" id="test-req-add" class="btn">Add</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<hr />
+			<h4>Response validation parameters</h4>
+
+			<table id="test-response" class="table">
+				<thead>
+					<tr>
+						<th class="column-resp-sel">Selector</th>
+						<th class="column-resp-val">Value</th>
+						<th class="column-resp-exact">Exact match</th>
+						<th class="column-resp-actions"></th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr>
+						<td><input id="test-resp-sel" type="text" class="stretch" /></td>
+						<td><input id="test-resp-val" type="text" class="stretch" /></td>
+
+						<td>
+							<div class="btn-group" data-toggle="buttons-radio">
+								<button type="button" id="test-resp-exact-yes" class="btn active">Yes</button>
+								<button type="button" id="test-resp-exact-no" class="btn">No</button>
+							</div>
+						</td>
+
+						<td><a href="#" id="test-resp-add" class="btn">Add</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="modal-footer">
+			<button class="btn btn-primary" onclick="popups.messageButton(constants.popups.yes)">
+				<i class="icon-ok icon-white"></i> Save
+			</button>
+
+			<button class="btn" data-dismiss="modal">
+				<i class="icon-remove"></i> Cancel
+			</button>
 		</div>
 	</div>
 
