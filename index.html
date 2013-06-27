@@ -14,6 +14,7 @@
 
 	<!-- Stylesheets -->
 	<link href="site/css/bootstrap.min.css" rel="stylesheet" type="text/css" media="screen, projection" />
+	<link href="site/css/bootstrap.scroll-modal.css" rel="stylesheet" type="text/css" media="screen, projection" />
 	<link href="site/css/awt.css" rel="stylesheet" type="text/css" media="screen, projection" />
 
 	<!-- Scripts -->
@@ -22,7 +23,9 @@
 	<script src="site/js/jquery.form.js" type="text/javascript"></script>
 	<script src="site/js/jquery.md5.js" type="text/javascript"></script>
 	<script src="site/js/jquery.strpad.js" type="text/javascript"></script>
+	<script src="site/js/jquery.stringify.js" type="text/javascript"></script>
 	<script src="site/js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="site/js/bootstrap.scroll-modal.js" type="text/javascript"></script>
 	<script src="lib/js/constants.js" type="text/javascript"></script>
 	<script src="lib/js/popups.js" type="text/javascript"></script>
 	<script src="lib/js/profiles.js" type="text/javascript"></script>
@@ -34,7 +37,7 @@
 	<div class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container">
-				<a id="brand" class="brand" href="./">Automatic Web Testing Utility</a>
+				<a id="brand" class="brand">Automatic Web Testing Utility</a>
 			</div>
 		</div>
 	</div>
@@ -57,7 +60,7 @@
 					<div class="controls">
 						<select id="profile-list" class="span3"></select>
 
-						<button id="profile-list-btn" class="btn" disabled="disabled">
+						<button id="profile-list-btn" type="button" class="btn" disabled="disabled">
 							<i class="icon-ok"></i> Select
 						</button>
 					</div>
@@ -68,7 +71,7 @@
 					<div class="controls">
 						<input id="profile-new" type="text" class="span3" value="" placeholder="Profile name" />
 
-						<button id="profile-new-btn" class="btn" disabled="disabled">
+						<button id="profile-new-btn" type="button" class="btn" disabled="disabled">
 							<i class="icon-pencil"></i> Create
 						</button>
 					</div>
@@ -100,15 +103,15 @@
 						<div class="controls">
 							<input id="profile-current" type="text" value="" />
 
-							<button id="profile-rename" class="btn" disabled="disabled">
+							<button id="profile-rename" type="button" class="btn" disabled="disabled">
 								<i class="icon-font"></i> Rename profile
 							</button>
 
-							<button id="profile-delete" class="btn btn-danger">
+							<button id="profile-delete" type="button" class="btn btn-danger">
 								<i class="icon-trash icon-white"></i> Delete profile
 							</button>
 
-							<button id="profile-change" class="btn pull-right">
+							<button id="profile-change" type="button" class="btn pull-right">
 								<i class="icon-refresh"></i> Change profile
 							</button>
 						</div>
@@ -121,10 +124,20 @@
 			<div class="span12">
 				<legend>
 					Web test cases
-					<button id="test-add" class="btn btn-primary pull-right">
+					<button id="test-add" type="button" class="btn btn-primary pull-right">
 						<i class="icon-plus icon-white"></i> Add test case
 					</button>
 				</legend>
+
+				<form class="form-horizontal form-test">
+					<div class="control-group">
+						<label class="control-label" for="profile-base-url">Base URL</label>
+
+						<div class="controls">
+							<input id="profile-base-url" type="text" />
+						</div>
+					</div>
+				</form>
 
 				<table id="test-table" class="table">
 					<thead>
@@ -146,7 +159,7 @@
 	</div>
 
 	<!-- General message box -->
-	<div id="popup-message" class="modal hide fade" data-backdrop="true" data-keyboard="true">
+	<div id="popup-message" class="modal hide" data-backdrop="true" data-keyboard="true">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 			<h3 id="popup-message-title"></h3>
@@ -157,22 +170,22 @@
 		</div>
 
 		<div class="modal-footer">
-			<button id="popup-message-ok" class="btn btn-primary" onclick="popups.messageButton(constants.popups.ok)">
+			<button id="popup-message-ok" type="button" class="btn btn-primary">
 				<i class="icon-ok icon-white"></i> OK
 			</button>
 
-			<button id="popup-message-yes" class="btn btn-primary" onclick="popups.messageButton(constants.popups.yes)">
+			<button id="popup-message-yes" type="button" class="btn btn-primary">
 				<i class="icon-ok icon-white"></i> Yes
 			</button>
 
-			<button id="popup-message-no" class="btn" onclick="popups.messageButton(constants.popups.no)">
+			<button id="popup-message-no" type="button" class="btn">
 				<i class="icon-remove"></i> No
 			</button>
 		</div>
 	</div>
 
 	<!-- Test case modal -->
-	<div id="popup-test" class="modal modal-big hide fade" data-backdrop="true" data-keyboard="true">
+	<div id="popup-test" class="modal hide" data-backdrop="true" data-keyboard="true" data-dynamic="true">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 			<h3>Test case</h3>
@@ -189,11 +202,19 @@
 				</div>
 
 				<div class="control-group">
-					<label class="control-label" for="test-url">URL</label>
+					<label class="control-label" for="test-url">Script path</label>
 
 					<div class="controls">
 						<input id="test-url" type="text" />
-						<div class="help-block">You must use the same hostname as the tool</div>
+						<div class="help-block">This will be appended to the base URL</div>
+					</div>
+				</div>
+
+				<div class="control-group">
+					<label class="control-label" for="test-dep">Depends on</label>
+
+					<div class="controls">
+						<select id="test-dep"></select>
 					</div>
 				</div>
 
@@ -262,11 +283,11 @@
 		</div>
 
 		<div class="modal-footer">
-			<button class="btn btn-primary" onclick="popups.messageButton(constants.popups.yes)">
+			<button type="button" class="btn btn-primary">
 				<i class="icon-ok icon-white"></i> Save
 			</button>
 
-			<button class="btn" data-dismiss="modal">
+			<button type="button" class="btn" data-dismiss="modal">
 				<i class="icon-remove"></i> Cancel
 			</button>
 		</div>

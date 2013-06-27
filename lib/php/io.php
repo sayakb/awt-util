@@ -19,6 +19,7 @@ $action = http_var('action', '');
 $profile = http_var('profile', '');
 $rename = http_var('rename', '');
 $data = http_var('data', '');
+$update = http_var('update', false);
 $file = http_file('file');
 
 // Get the profile path
@@ -58,7 +59,7 @@ switch($action)
 	case 'save':
 		// Kill the session if missing data or file already exists
 		validate_session(empty($profile) || empty($data), STATUS_NO_DATA);
-		validate_session(file_exists($profile_src), STATUS_FILE_EXISTS);
+		validate_session(!$update && file_exists($profile_src), STATUS_FILE_EXISTS);
 
 		// Create the profile
 		$status = file_put_contents($profile_src, $data, LOCK_EX);

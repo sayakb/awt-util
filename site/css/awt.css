@@ -8,76 +8,64 @@
 */
 
 body {
-	position: relative;
-	padding-top: 60px;
+  position: relative;
+  padding-top: 60px;
 }
-
 h1 img {
-	margin-top: -7px;
+  margin-top: -7px;
 }
-
 th.column-id,
 th.column-run {
-	width: 15%;
+  width: 15%;
 }
-
 th.column-resp-exact,
 th.column-req-actions,
 th.column-resp-actions {
-	width: 10%;
+  width: 10%;
 }
-
 input[readonly],
 select[readonly] {
-	cursor: pointer;
-	background-color: #ffffff;
+  cursor: pointer;
+  background-color: #ffffff;
 }
-
 .container {
-	min-width: 940px;
+  min-width: 940px;
 }
-
-.form-profile .control-group {
-	margin-bottom: 0;
+.brand {
+  cursor: pointer;
 }
-
-.form-profile .control-label {
-	width: auto;
+.form-profile .control-group,
+.form-test .control-group {
+  margin-bottom: 0;
 }
-
+.form-profile .control-label,
+.form-test .control-label {
+  width: auto;
+}
 .form-profile .controls {
-	margin-left: 100px;
+  margin-left: 100px;
 }
-
-.modal-big {
-	width: 800px;
-	margin-left: -400px;
+.form-test .controls {
+  margin-left: 72px;
 }
-
 .alert-profile {
-	margin-top: -20px;
+  margin-top: -20px;
 }
-
 .align-center {
-	text-align: center;
+  text-align: center;
 }
-
 .align-left {
-	text-align: left;
+  text-align: left;
 }
-
 .align-right {
-	text-align: right;
+  text-align: right;
 }
-
 .pull-left {
-	float: left;
+  float: left;
 }
-
 .pull-right {
-	float: right;
+  float: right;
 }
-
 .stretch {
-	width: 99%;
+  width: 99%;
 }
