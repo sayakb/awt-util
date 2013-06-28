@@ -23,6 +23,9 @@ select[readonly] {
   cursor: pointer;
   background-color: #ffffff;
 }
+td {
+  word-break: break-all;
+}
 th.column-actions,
 th.column-req-actions,
 th.column-resp-action,
