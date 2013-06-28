@@ -18,20 +18,33 @@ th.column-id,
 th.column-run {
   width: 15%;
 }
-th.column-resp-exact,
-th.column-req-actions,
-th.column-resp-actions {
-  width: 10%;
-}
 input[readonly],
 select[readonly] {
   cursor: pointer;
   background-color: #ffffff;
 }
+th.column-actions,
+th.column-req-actions,
+th.column-resp-action,
+th.column-resp-exact {
+  width: 1px;
+}
+td.column-actions,
+td.column-req-actions,
+td.column-resp-actions,
+td.column-resp-exact {
+  text-align: center;
+}
 .container {
   min-width: 940px;
 }
 .brand {
+  cursor: pointer;
+}
+.btn-link {
+  padding: 0;
+}
+.hand  {
   cursor: pointer;
 }
 .form-profile .control-group,
@@ -65,6 +78,7 @@ select[readonly] {
 }
 .pull-right {
   float: right;
+  margin-left: 5px;
 }
 .stretch {
   width: 99%;

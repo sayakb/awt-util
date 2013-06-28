@@ -30,6 +30,7 @@
 	<script src="lib/js/popups.js" type="text/javascript"></script>
 	<script src="lib/js/profiles.js" type="text/javascript"></script>
 	<script src="lib/js/html.js" type="text/javascript"></script>
+	<script src="lib/js/validator.js" type="text/javascript"></script>
 	<script src="lib/js/ui.js" type="text/javascript"></script>
 </head>
 
@@ -84,7 +85,7 @@
 						<input id="profile-import-file" name="file" type="file" class="hide" />
 
 						<button id="profile-import-btn" type="submit" class="btn" disabled="disabled">
-							<i class="icon-download-alt"></i> Import
+							<i class="icon-share-alt"></i> Import
 						</button>
 					</div>
 				</div>
@@ -107,9 +108,8 @@
 								<i class="icon-font"></i> Rename profile
 							</button>
 
-							<button id="profile-delete" type="button" class="btn btn-danger">
-								<i class="icon-trash icon-white"></i> Delete profile
-							</button>
+							<i id="profile-delete" class="icon-trash hand" data-toggle="tooltip" title="Delete profile"></i>
+							<i id="profile-export" class="icon-download-alt hand" data-toggle="tooltip" title="Export profile"></i>
 
 							<button id="profile-change" type="button" class="btn pull-right">
 								<i class="icon-refresh"></i> Change profile
@@ -124,8 +124,13 @@
 			<div class="span12">
 				<legend>
 					Web test cases
-					<button id="test-add" type="button" class="btn btn-primary pull-right">
-						<i class="icon-plus icon-white"></i> Add test case
+
+					<button id="test-add" type="button" class="btn pull-right">
+						<i class="icon-plus"></i> Add test case
+					</button>
+
+					<button id="test-run" type="button" class="btn btn-primary pull-right" data-loading-text="Running...">
+						<i class="icon-play icon-white"></i> Run tests
 					</button>
 				</legend>
 
@@ -145,6 +150,7 @@
 							<th class="column-id">ID</th>
 							<th class="column-name">Name</th>
 							<th class="column-run">Run status</th>
+							<th class="column-actions"></th>
 						</tr>
 					</thead>
 
@@ -155,32 +161,6 @@
 					No test cases defined for this profile.
 				</div>
 			</div>
-		</div>
-	</div>
-
-	<!-- General message box -->
-	<div id="popup-message" class="modal hide" data-backdrop="true" data-keyboard="true">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-			<h3 id="popup-message-title"></h3>
-		</div>
-
-		<div class="modal-body">
-			<p id="popup-message-body"></p>
-		</div>
-
-		<div class="modal-footer">
-			<button id="popup-message-ok" type="button" class="btn btn-primary">
-				<i class="icon-ok icon-white"></i> OK
-			</button>
-
-			<button id="popup-message-yes" type="button" class="btn btn-primary">
-				<i class="icon-ok icon-white"></i> Yes
-			</button>
-
-			<button id="popup-message-no" type="button" class="btn">
-				<i class="icon-remove"></i> No
-			</button>
 		</div>
 	</div>
 
@@ -211,10 +191,10 @@
 				</div>
 
 				<div class="control-group">
-					<label class="control-label" for="test-dep">Depends on</label>
+					<label class="control-label" for="test-parent">Depends on</label>
 
 					<div class="controls">
-						<select id="test-dep"></select>
+						<select id="test-parent"></select>
 					</div>
 				</div>
 
@@ -233,7 +213,7 @@
 			<hr />
 			<h4>Request parameters</h4>
 
-			<table id="test-requests" class="table">
+			<table id="test-request" class="table">
 				<thead>
 					<tr>
 						<th class="column-req-param">Param</th>
@@ -243,10 +223,10 @@
 				</thead>
 
 				<tbody>
-					<tr>
+					<tr id="test-request-ctrl">
 						<td><input id="test-req-param" type="text" class="stretch" /></td>
 						<td><input id="test-req-val" type="text" class="stretch" /></td>
-						<td><a href="#" id="test-req-add" class="btn">Add</td>
+						<td><button id="test-req-add" type="button" class="btn">Add</button></td>
 					</tr>
 				</tbody>
 			</table>
@@ -265,7 +245,7 @@
 				</thead>
 
 				<tbody>
-					<tr>
+					<tr id="test-resp-ctrl">
 						<td><input id="test-resp-sel" type="text" class="stretch" /></td>
 						<td><input id="test-resp-val" type="text" class="stretch" /></td>
 
@@ -276,19 +256,45 @@
 							</div>
 						</td>
 
-						<td><a href="#" id="test-resp-add" class="btn">Add</td>
+						<td><button id="test-resp-add" type="button" class="btn">Add</button></td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
 
 		<div class="modal-footer">
-			<button type="button" class="btn btn-primary">
+			<button id="test-case-save" type="button" class="btn btn-primary">
 				<i class="icon-ok icon-white"></i> Save
 			</button>
 
-			<button type="button" class="btn" data-dismiss="modal">
+			<button id="test-case-cancel" type="button" class="btn" data-dismiss="modal">
 				<i class="icon-remove"></i> Cancel
+			</button>
+		</div>
+	</div>
+
+	<!-- General message box -->
+	<div id="popup-message" class="modal hide" data-backdrop="true" data-keyboard="true">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			<h3 id="popup-message-title"></h3>
+		</div>
+
+		<div class="modal-body">
+			<p id="popup-message-body"></p>
+		</div>
+
+		<div class="modal-footer">
+			<button id="popup-message-ok" type="button" class="btn btn-primary">
+				<i class="icon-ok icon-white"></i> OK
+			</button>
+
+			<button id="popup-message-yes" type="button" class="btn btn-primary">
+				<i class="icon-ok icon-white"></i> Yes
+			</button>
+
+			<button id="popup-message-no" type="button" class="btn">
+				<i class="icon-remove"></i> No
 			</button>
 		</div>
 	</div>

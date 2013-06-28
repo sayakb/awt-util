@@ -35,6 +35,7 @@ jQuery.extend({
                     json.push((arr ? "" : '"' + n + '":') + String(v));
                 }
             }
+
             return (arr ? "[" : "{") + String(json) + (arr ? "]" : "}");
         }
     }
