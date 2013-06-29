@@ -50,6 +50,10 @@ td.column-resp-exact {
 .hand  {
   cursor: pointer;
 }
+.modal-big {
+  width: 800px;
+  margin-left: -400px;
+}
 .form-profile .control-group,
 .form-test .control-group {
   margin-bottom: 0;
