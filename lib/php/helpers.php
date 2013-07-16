@@ -18,7 +18,7 @@ if (!defined('IN_SCRIPT'))
 * Function to generate a JSON output
 *
 * @param data	Data to be encoded to JSON
-* @returns		void
+* @return		void
 */
 function create_response($data)
 {
@@ -35,7 +35,7 @@ function create_response($data)
 *
 * @param condition		Condition when true should kill the session
 * @param status_code	Status code to return if condition is false
-* @returns				void
+* @return				void
 */
 function validate_session($condition, $status_code)
 {
@@ -51,7 +51,7 @@ function validate_session($condition, $status_code)
 *
 * @param name		Name of the variable
 * @param default	Default fallback value for the variable
-* @returns			mixed
+* @return			mixed
 */
 function http_var($name, $default)
 {
@@ -84,7 +84,7 @@ function http_var($name, $default)
 * Function to retrieve a POSTed file data
 *
 * @param name		Name of the file control
-* @returns			array
+* @return			array
 */
 function http_file($name)
 {
