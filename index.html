@@ -392,6 +392,24 @@
 		</div>
 	</div>
 
+	<!-- View response modal -->
+	<div id="popup-resp" class="modal modal-big hide" data-backdrop="true" data-keyboard="true">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			<h3>View response (#<span id="popup-test-id"></span>)</h3>
+		</div>
+
+		<div class="modal-body">
+			<iframe id="popup-test-resp"></iframe>
+		</div>
+
+		<div class="modal-footer">
+			<button id="popup-meta-cancel" type="button" class="btn" data-dismiss="modal">
+				<i class="icon-remove"></i> Close
+			</button>
+		</div>
+	</div>
+
 	<footer class="align-center">
 		&copy; 2013 <a href="http://sayakbanerjee.com">Sayak Banerjee</a>. All rights reserved.
 	</footer>
